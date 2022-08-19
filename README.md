@@ -8,13 +8,14 @@ Open source project provided to Baidu PaddlePaddle community
 具体使用方法请见使用说明文档
 
 ## 文件目录
-	Texthandle
-	|
-	|--texthandle
-	|
-	|--requirements
-	|
-	|--使用说明
+
+Texthandle
+|
+|--texthandle
+|
+|--requirements
+|
+|--使用说明
   |
   |--运行结果示意
 		|
