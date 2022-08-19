@@ -11,17 +11,14 @@ Open source project provided to Baidu PaddlePaddle community
 
 Texthandle
 
-|
-
 |--texthandle
 
-|
 |--requirements
-|
+
 |--使用说明
-  |
-  |--运行结果示意
-    |	
+
+|--运行结果示意
+
     |--文字识别示例	
     |--文字识别+文本纠错结果
     |	
