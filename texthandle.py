@@ -139,7 +139,7 @@ def Hand_Write(args: dict):
     # encoding:utf-8
 
     # client_id 为官网获取的AK， client_secret 为官网获取的SK
-    host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=IYMx7W9kmdyoPjDOVkuBEMTl&client_secret=Qz7KxohgwhaNSleN2PGIf8yGzBdM4q1x'
+    host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=TcPPU19bTYCFtxLHFvGVo9tu&client_secret=tfaZTHNlcvxBG9sYV7cGbCW5hTcjdKla'
 
     response = requests.get(host)
 
@@ -330,8 +330,10 @@ def acess_token():
                              "https://wenxin.baidu.com/younger/portal/api/oauth/token",
                              data={
                                  "grant_type": "client_credentials",
-                                 "client_id": "PMywBGGeWST03IRRFD7VdHaaYFwMA0xG",
-                                 "client_secret": "FFkPTQurtncFk1dOXkUrPxEmk6GjDYvj"},
+                                #  "client_id": "PMywBGGeWST03IRRFD7VdHaaYFwMA0xG",
+                                #  "client_secret": "FFkPTQurtncFk1dOXkUrPxEmk6GjDYvj"},
+                                 "client_id": "jMp1UuMESExHSYoSXKlRgO5M1mmWTIGV",
+                                 "client_secret": "nukcB8G8IjifV5XlkOd45MLgVSr83usW"},
                              timeout=3)
     token = json.loads(token.text)["data"]
 
@@ -344,7 +346,7 @@ q_gui = CreateQGUI(title="文本处理系统                   ",  # 界面标�
 # 在界面最上方添加一个按钮，链接到GitHub主页
 q_gui.add_banner_tool(GitHub(url="https://www.nwpu.edu.cn/", name="访问西工大官网"))
 # 也可以是AI Studio
-q_gui.add_banner_tool(AIStudio(url="https://wenxin.baidu.com/younger/apiDetail?id=20006", name="获取API"))
+q_gui.add_banner_tool(AIStudio(url="https://wenxin.baidu.com/moduleApi/key", name="获取API"))
 
 # 获取默认token
 acess_token()
@@ -407,7 +409,7 @@ q_gui.add_notebook_tool(Label(title="", text="更多详细内容请前往  ”�
 # 左侧信息栏
 # 简单加个简介
 q_gui.set_navigation_about(author="NPU AI 15",
-                           version="1.0.0",
+                           version="1.1.2",
                            github_url="https://www.nwpu.edu.cn/",
                            other_info=["欢迎加入NPU！"])
 
