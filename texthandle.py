@@ -19,7 +19,7 @@ token = " "
 
 # 小说续写
 def Novel_Sequel(args: dict):
-    url = "https://wenxin.baidu.com/younger/portal/api/rest/1.0/ernie/3.0/zeus"
+    url = "https://wenxin.baidu.com/moduleApi/portal/api/rest/1.0/ernie/3.0.21/zeus"
     fo = open(args["文件选择3"].get(), "r", encoding='utf-8')
 
     dic = 0
@@ -33,12 +33,13 @@ def Novel_Sequel(args: dict):
         'access_token': token,
         'text': '上文：' + fo.read(),
         'seq_len': 1000,
-        'task_prompt': '',
+        'task_prompt': 'PARAGRAPH',
         'dataset_prompt': '',
         'topk': 10,
         'stop_token': '',
         'is_unidirectional': 1,
         'min_dec_len': 100,
+        'mask_type': 'paragraph',
         'min_dec_penalty_text': '[gEND]'
     }
 
@@ -55,8 +56,8 @@ def Novel_Sequel(args: dict):
         for i in range(61, 81):
             time.sleep(0.05)
             args["进度条3"].set(i)
-
         # 创建结果文档
+        # print(dic)
         text_create_3(dic["data"]['result'], args)
 
     # 进度条
@@ -79,7 +80,7 @@ def Novel_Sequel(args: dict):
 
 # 文本纠错
 def text_error_correction(args: dict):
-    url = "https://wenxin.baidu.com/younger/portal/api/rest/1.0/ernie/3.0/zeus"
+    url = "https://wenxin.baidu.com/moduleApi/portal/api/rest/1.0/ernie/3.0.21/zeus"
     fo = open(args["文件选择2"].get(), "r", encoding='utf-8')
     dic = 0
     # 进度条
@@ -94,6 +95,7 @@ def text_error_correction(args: dict):
         'dataset_prompt': '',
         'access_token': token,
         'topk': 1,
+        "mask_type": "word",
         'stop_token': ''
     }
 
@@ -169,9 +171,10 @@ def Hand_Write(args: dict):
         print(dic['words_result'][i]['words'])
 
     # 文档纠错
-    url = "https://wenxin.baidu.com/younger/portal/api/rest/1.0/ernie/3.0/zeus"
+    url = "https://wenxin.baidu.com/moduleApi/portal/api/rest/1.0/ernie/3.0.21/zeus"
     fo = open(args["保存位置1"].get(), "r", encoding='utf-8')
     dic = 0
+    
     # 进度条
     for i in range(1, 41):
         time.sleep(0.01)
@@ -181,18 +184,19 @@ def Hand_Write(args: dict):
                              "https://wenxin.baidu.com/younger/portal/api/oauth/token",
                              data={
                                  "grant_type": "client_credentials",
-                                 "client_id": "PMywBGGeWST03IRRFD7VdHaaYFwMA0xG",
-                                 "client_secret": "FFkPTQurtncFk1dOXkUrPxEmk6GjDYvj"},
+                                 "client_id": "jMp1UuMESExHSYoSXKlRgO5M1mmWTIGV",
+                                 "client_secret": "nukcB8G8IjifV5XlkOd45MLgVSr83usW"},
                              timeout=3)
     token = json.loads(token.text)["data"]
 
     payload = {
-        'text': "改正下面文本中的错误：\"" + words +"\"",
+        'text': "改正下面文本中的错误：\"" + fo.read()+"\"",
         'seq_len': 1000,
         'task_prompt': 'Correction',
         'dataset_prompt': '',
         'access_token': token,
         'topk': 1,
+        'mask_type': "word",
         'stop_token': ''
     }
 
@@ -241,7 +245,7 @@ def feedback(args: dict):
     elif info == "一般":
         print("我们会努力改进的！")
     else:
-        print("啊~我们对此非常抱歉。如有问题可联系平台客服进行解决呦~QQ:3092665186")
+        print("啊~我们对此非常抱歉。如有问题可联系平台客服进行解决呦~QQ:313810008")
 
 
 def bind_dir(args: dict):
@@ -330,8 +334,6 @@ def acess_token():
                              "https://wenxin.baidu.com/younger/portal/api/oauth/token",
                              data={
                                  "grant_type": "client_credentials",
-                                #  "client_id": "PMywBGGeWST03IRRFD7VdHaaYFwMA0xG",
-                                #  "client_secret": "FFkPTQurtncFk1dOXkUrPxEmk6GjDYvj"},
                                  "client_id": "jMp1UuMESExHSYoSXKlRgO5M1mmWTIGV",
                                  "client_secret": "nukcB8G8IjifV5XlkOd45MLgVSr83usW"},
                              timeout=3)
@@ -401,8 +403,9 @@ q_gui.add_notebook_tool(run_menu)
 q_gui.add_notebook_tool(Label(title="帮助文档", text="1.在进行更改API时需要确认账户与密码对应，否则无法运行，需要对其进行覆盖或者重启"
                                                  "应用程序。\n2.所有待处理文件等均需限制在1000字以内。\n3.所有待处理文本中不得含有侮辱性词汇，"
                                                  "否则程序无法正常运行。\n4.使用OCR时注意上传照片需要清晰可见，行与行直接界限分明，可以兼容."
-                                                 "jpg与.npg文件，对于大量手写文字内容，可以拍成多张照片后上传，识别时间随字数量的增大"
-                                                 "而增大。\n5.使用文本纠错时需上传.txt文件，为防止不必要报错，格式应设置为utf-8格式。",
+                                                 "jpg与.npg文件，对于大量\n手写文字内容，可以拍成多张照片后上传，识别时间随字数量的增大"
+                                                 "而增大。\n5.使用文本纠错时需上传.txt文件，为防止不必要报错，格式应设置为utf-8格式。"
+                                                 "\n6.可能存在运行异常的情况，原因是百度服务器调用额度有限，此时调用人数较多，调用可能比较慢\n或者卡顿。",
                               alignment=LEFT, tab_index=4))
 q_gui.add_notebook_tool(Label(title="", text="更多详细内容请前往  ”使用说明“  进行查看。",
                               alignment=LEFT, tab_index=4))
